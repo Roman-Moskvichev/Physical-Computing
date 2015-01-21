@@ -1,25 +1,32 @@
-
-int button = 6;
+int LED = 12;
+int ground = 13;
+int button1 = 1;
+int button2 = 2;
+int button3 = 3;
 int delay1 = 100;
+int buttonState;
+
 
 void setup() {                
 
-  pinMode(12, OUTPUT);
-  pinMode(13, OUTPUT); 
-  digitalWrite(13, HIGH);
-  pinMode(button, INPUT);
-   
+  pinMode(LED, OUTPUT);
+  pinMode(ground, OUTPUT); 
+  digitalWrite(ground, HIGH);
+  
+
+  
 }
 
 void loop() {
   
-  int buttonState = digitalRead(button);
-  
-  int totaldelay = buttonState + delay1;
-  
-  digitalWrite(12, LOW);   
-  delay(totaldelay);               
-  digitalWrite(12, HIGH);   
-  delay(totaldelay);  
+  if (buttonState = digitalRead(button1)) {
+    digitalWrite(LED, LOW);
+    delay(delay1+100);
+  } else if (buttonState = digitalRead(button2)) {
+    digitalWrite(LED, LOW);
+    delay(delay1+300);
+  } else if (buttonState = digitalRead(button3)) {
+    digitalWrite(LED, LOW);
+    delay(delay1+600);
+  }
 }
-
