@@ -1,1 +1,25 @@
-as
+
+int button = 6;
+int delay1 = 100;
+
+void setup() {                
+
+  pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT); 
+  digitalWrite(13, HIGH);
+  pinMode(button, INPUT);
+   
+}
+
+void loop() {
+  
+  int buttonState = digitalRead(button);
+  
+  int totaldelay = buttonState + delay1;
+  
+  digitalWrite(12, LOW);   
+  delay(totaldelay);               
+  digitalWrite(12, HIGH);   
+  delay(totaldelay);  
+}
+
