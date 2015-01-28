@@ -1,0 +1,35 @@
+const int readings = 50;
+ int LDR = A0;
+ int ledPin = 13;      
+ int sensorValue = 0;
+ int readValues[readings];
+ int value = 0;
+ int smooth = 0;
+ 
+
+ void setup() {
+   pinMode(LDR, INPUT);
+   Serial.begin(9600);
+   pinMode(ledPin, OUTPUT);
+ }
+ 
+ 
+ void loop() {
+   sensorValue = analogRead(LDR);
+   value = map(LDR, 1, 1000, 1000, 1);
+   
+   if (value >= 200)
+   {
+     digitalWrite(13, HIGH);
+   } else {
+     digitalWrite(13, LOW);
+   }
+     
+     for (int currentRead = 0; currentRead < readings; currentRead++)
+    readValues[readings] + sensorValue; 
+    
+    smooth = readValues[readings]/50; 
+   
+   Serial.println(sensorValue);
+   delay(1000);
+ }
