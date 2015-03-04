@@ -1,0 +1,25 @@
+import org.firmata.*;
+import cc.arduino.*;
+import processing.serial.*;
+Serial port;
+
+int posY;
+
+void setup()
+{
+  size(600, 600 );
+  strokeWeight( 1 );
+  frameRate( 30 );
+  
+  port = new Serial(this, "COM4", 9600);
+}
+
+void draw()
+ {
+  
+  background(234);
+  float posY = map(mouseY, 0, height+100, 0, 300);
+  ellipse(300, posY+200, 80, 80);  
+  port.write(mouseY);
+
+ }
