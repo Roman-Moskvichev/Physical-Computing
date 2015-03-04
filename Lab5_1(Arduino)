@@ -1,0 +1,24 @@
+#include <Servo.h> 
+ 
+Servo myservo;  
+ 
+ 
+void setup() 
+{ 
+  Serial.begin(9600);
+  myservo.attach(9);  
+} 
+ 
+ 
+void loop() 
+{ 
+  int motion;
+  
+  if (Serial.available()) {
+    
+    motion = Serial.read();
+
+    float mov = map(motion, 0, 600, 0, 100);
+    myservo.write(mov);
+  }                 
+  } 
