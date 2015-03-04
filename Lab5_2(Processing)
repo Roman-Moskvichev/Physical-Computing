@@ -1,0 +1,22 @@
+import processing.serial.*;
+
+Serial port;     
+
+void setup ()
+{
+  size(600, 600);        
+  frameRate(60);
+  port = new Serial(this, "COM4", 9600);
+  background(0);
+}
+void draw () 
+{
+  
+}
+
+void serialEvent (Serial port)
+{
+  int reading = port.read();
+  float read1 = map(reading, 0, 43, 0, 255);
+  background(read1);
+}
