@@ -1,0 +1,108 @@
+#include <CapacitiveSensor.h>
+
+/*referencing CapitiveSense Library by Paul Badger 2008
+ *referencing Arduino tone Example.
+ */
+#include "pitches.h"
+
+int melody[] = {
+  NOTE_A4, NOTE_C5, NOTE_A4, NOTE_C5, NOTE_B4, NOTE_E4, NOTE_E4};
+
+int noteDurations[] = {
+  4, 4, 4, 4,4,6,6,4 };
+  
+int temperaturePin = 0;
+int lightPin = 1;
+CapacitiveSensor   cs_4_2 = CapacitiveSensor(4,2); 
+int reset = 0;
+
+void setup()                    
+{
+  
+  pinMode(13, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(11, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(8, OUTPUT);
+  
+  
+   cs_4_2.set_CS_AutocaL_Millis(0xFFFFFFFF);    
+   Serial.begin(9600);
+}
+
+void loop()                    
+{
+  
+  int temp = analogRead(temperaturePin); 
+  int light = analogRead(lightPin);
+    long start = millis();
+    long total1 =  cs_4_2.capacitiveSensor(30);
+    
+
+    Serial.println(millis() - start);        
+    Serial.println("\t");  
+
+float voltage = temp * 3.3;
+ voltage /= 1024.0;     
+
+
+    if (total1 >=100) 
+    {
+      
+      if (reset != 1){
+      reset = 2;
+      }
+      
+      digitalWrite(11, HIGH);  
+  delay(750);          
+  digitalWrite(8, LOW);   
+  //delay(750);            
+  digitalWrite(12, HIGH);  
+  delay(750);              
+  digitalWrite(9, LOW);    
+  //delay(750); 
+  digitalWrite(13, HIGH); 
+  delay(750); 
+  digitalWrite(10, LOW);
+  
+  if (reset >= 2)
+  {
+  for (int thisNote = 0; thisNote < 8; thisNote++) {
+
+    int noteDuration = 1000/noteDurations[thisNote];
+    tone(7, melody[thisNote],noteDuration);
+
+    int pauseBetweenNotes = noteDuration * 1.30;
+    delay(pauseBetweenNotes);
+    noTone(7);
+    reset = 1;
+  }
+  }
+       Serial.println("Hello User");  
+    } else if (total1 <=99)
+    {
+      reset = 0;
+     digitalWrite(8, HIGH);   
+  delay(750);              
+  digitalWrite(11, LOW);   
+  //delay(750);             
+  digitalWrite(9, HIGH);  
+  delay(750);             
+  digitalWrite(12, LOW); 
+  //delay(750); 
+  digitalWrite(10, HIGH);   
+  delay(750); 
+  digitalWrite(13, LOW);
+     
+      
+    }
+    
+    Serial.println(total1);
+    float temperatureC = (voltage - 0.5) * 100 +22 ;  
+    Serial.print(temperatureC); Serial.println(" degrees C"); 
+   Serial.print(light); Serial.println(" - Light Level");
+                 
+
+    delay(1000);                  
+}
